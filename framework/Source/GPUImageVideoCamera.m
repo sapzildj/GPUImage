@@ -87,7 +87,6 @@ void setColorConversion709( GLfloat conversionMatrix[9] )
     capturePaused = NO;
     outputRotation = kGPUImageNoRotation;
     internalRotation = kGPUImageNoRotation;
-    captureAsYUV = YES;
     _preferredConversion = kColorConversion709;
     
 	// Grab the back-facing or front-facing camera
@@ -122,8 +121,8 @@ void setColorConversion709( GLfloat conversionMatrix[9] )
 	videoOutput = [[AVCaptureVideoDataOutput alloc] init];
 	[videoOutput setAlwaysDiscardsLateVideoFrames:NO];
     
-//    if (captureAsYUV && [GPUImageContext deviceSupportsRedTextures])
-    if (captureAsYUV && [GPUImageContext supportsFastTextureUpload])
+//    if ([self shouldCaptureAsYUV] && [GPUImageContext deviceSupportsRedTextures])
+    if ([self shouldCaptureAsYUV] && [GPUImageContext supportsFastTextureUpload])
     {
         BOOL supportsFullYUVRange = NO;
         NSArray *supportedPixelFormats = videoOutput.availableVideoCVPixelFormatTypes;
@@ -153,7 +152,7 @@ void setColorConversion709( GLfloat conversionMatrix[9] )
     
     runSynchronouslyOnVideoProcessingQueue(^{
         
-        if (captureAsYUV)
+        if ([self shouldCaptureAsYUV])
         {
             [GPUImageContext useImageProcessingContext];
             //            if ([GPUImageContext deviceSupportsRedTextures])
@@ -566,7 +565,7 @@ void setColorConversion709( GLfloat conversionMatrix[9] )
                 [currentTarget setInputRotation:outputRotation atIndex:textureIndexOfTarget];
                 [currentTarget setInputSize:CGSizeMake(bufferWidth, bufferHeight) atIndex:textureIndexOfTarget];
                 
-                if ([currentTarget wantsMonochromeInput] && captureAsYUV)
+                if ([currentTarget wantsMonochromeInput] && [self shouldCaptureAsYUV])
                 {
                     [currentTarget setCurrentlyReceivingMonochromeInput:YES];
                     // TODO: Replace optimization for monochrome output
@@ -652,12 +651,12 @@ void setColorConversion709( GLfloat conversionMatrix[9] )
 
     [GPUImageContext useImageProcessingContext];
 
-    if ([GPUImageContext supportsFastTextureUpload] && captureAsYUV)
+    if ([GPUImageContext supportsFastTextureUpload] && [self shouldCaptureAsYUV])
     {
         CVOpenGLESTextureRef luminanceTextureRef = NULL;
         CVOpenGLESTextureRef chrominanceTextureRef = NULL;
 
-//        if (captureAsYUV && [GPUImageContext deviceSupportsRedTextures])
+//        if ([self shouldCaptureAsYUV] && [GPUImageContext deviceSupportsRedTextures])
         if (CVPixelBufferGetPlaneCount(cameraFrame) > 0) // Check for YUV planar inputs to do RGB conversion
         {
             CVPixelBufferLockBaseAddress(cameraFrame, 0);
@@ -925,7 +924,7 @@ void setColorConversion709( GLfloat conversionMatrix[9] )
         //    From the iOS 5.0 release notes:
         //    In previous iOS versions, the front-facing camera would always deliver buffers in AVCaptureVideoOrientationLandscapeLeft and the back-facing camera would always deliver buffers in AVCaptureVideoOrientationLandscapeRight.
         
-        if (captureAsYUV && [GPUImageContext supportsFastTextureUpload])
+        if ([self shouldCaptureAsYUV] && [GPUImageContext supportsFastTextureUpload])
         {
             outputRotation = kGPUImageNoRotation;
             if ([self cameraPosition] == AVCaptureDevicePositionBack)
@@ -1059,4 +1058,8 @@ void setColorConversion709( GLfloat conversionMatrix[9] )
     [self updateOrientationSendToTargets];
 }
 
+- (BOOL)shouldCaptureAsYUV
+{
+    return YES;
+}
 @end

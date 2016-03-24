@@ -36,8 +36,7 @@ void setColorConversion709( GLfloat conversionMatrix[9] );
     BOOL capturePaused;
     GPUImageRotationMode outputRotation, internalRotation;
     dispatch_semaphore_t frameRenderingSemaphore;
-        
-    BOOL captureAsYUV;
+    
     GLuint luminanceTexture, chrominanceTexture;
 
     __unsafe_unretained id<GPUImageVideoCameraDelegate> _delegate;
@@ -152,5 +151,9 @@ void setColorConversion709( GLfloat conversionMatrix[9] );
 
 + (BOOL)isBackFacingCameraPresent;
 + (BOOL)isFrontFacingCameraPresent;
+
+/** Should Capture As YUV Pixel Format, Default is YES.
+ */
+- (BOOL)shouldCaptureAsYUV;
 
 @end

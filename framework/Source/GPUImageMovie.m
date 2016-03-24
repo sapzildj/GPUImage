@@ -582,7 +582,7 @@ static CVReturn renderCallback(CVDisplayLinkRef displayLink,
         CVOpenGLTextureRef chrominanceTextureRef = NULL;
 #endif
 
-        //        if (captureAsYUV && [GPUImageContext deviceSupportsRedTextures])
+        //        if ([self shouldCaptureAsYUV] && [GPUImageContext deviceSupportsRedTextures])
         if (CVPixelBufferGetPlaneCount(movieFrame) > 0) // Check for YUV planar inputs to do RGB conversion
         {
 
