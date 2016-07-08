@@ -7,8 +7,25 @@ Pod::Spec.new do |s|
   s.author   = { 'Brad Larson' => 'contact@sunsetlakesoftware.com' }
   s.source   = { :git => 'https://github.com/BradLarson/GPUImage.git', :tag => "#{s.version}" }
   
-  s.source_files = 'framework/Source/**/*.{h,m}'
-  s.resources = 'framework/Resources/*.png'
+  s.source_files = [
+      "framework/Source/**/GPUImageTwoPassFilter.{h,m}",
+      "framework/Source/**/GPUImageColorConversion.{h,m}",
+      "framework/Source/**/GPUImageTwoPassTextureSamplingFilter.{h,m}",
+      "framework/Source/**/GPUImageSharpenFilter.{h,m}",
+      "framework/Source/**/GLProgram.{h,m}",
+      "framework/Source/**/GPUImageContext.{h,m}",            
+      "framework/Source/**/GPUImageFilter.{h,m}",                  
+      "framework/Source/**/GPUImageFilterGroup.{h,m}",                        
+      "framework/Source/**/GPUImageFramebuffer.{h,m}",                              
+      "framework/Source/**/GPUImageFramebufferCache.{h,m}",                                    
+      "framework/Source/**/GPUImageOutput.{h,m}",                                          
+      "framework/Source/**/GPUImageMovieWriter.{h,m}",                                                
+      "framework/Source/**/GPUImagePicture.{h,m}",                                                      
+      "framework/Source/**/GPUImageStillCamera.{h,m}",                                                            
+      "framework/Source/**/GPUImageTwoInputFilter.{h,m}",                                                                  
+      "framework/Source/**/GPUImageVideoCamera.{h,m}",                                                                        
+      "framework/Source/**/GPUImageView.{h,m}",                                                                              
+    ]
   s.requires_arc = true
   s.xcconfig = { 'CLANG_MODULES_AUTOLINK' => 'YES' }
   
