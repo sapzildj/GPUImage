@@ -10,6 +10,7 @@ Pod::Spec.new do |s|
   s.source_files = [
 	  "framework/Source/**/GPUImageLuminosity.{h,m}",
       "framework/Source/**/GPUImageAverageColor.{h,m}",
+      "framework/Source/**/GPUImageGaussianBlurFilter.{h,m}",
       "framework/Source/**/GPUImageCropFilter.{h,m}",
       "framework/Source/**/GPUImageTwoPassFilter.{h,m}",
       "framework/Source/**/GPUImageColorConversion.{h,m}",
