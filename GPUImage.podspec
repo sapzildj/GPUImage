@@ -8,6 +8,7 @@ Pod::Spec.new do |s|
   s.source   = { :git => 'https://github.com/BradLarson/GPUImage.git', :tag => "#{s.version}" }
   
   s.source_files = [
+	  "framework/Source/**/GPUImageBilateralFilter.{h,m}",
 	  "framework/Source/**/GPUImageLuminosity.{h,m}",
       "framework/Source/**/GPUImageAverageColor.{h,m}",
       "framework/Source/**/GPUImageGaussianBlurFilter.{h,m}",
